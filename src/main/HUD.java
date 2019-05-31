@@ -16,6 +16,11 @@ public class HUD {
         greenValue = Game.clamp(greenValue, 0, 255);
         greenValue = HEALTH * 2;
         score++;
+
+        if (HEALTH == 0) {
+            System.err.println("Score: " + score + " Level: a" + level);
+            System.exit(1);
+        }
     }
 
     public void render(Graphics graphics) {

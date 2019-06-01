@@ -18,7 +18,7 @@ public class HUD {
         score++;
 
         if (HEALTH == 0) {
-            System.err.println("Score: " + score + " Level: a" + level);
+            System.err.println("Score: " + score + " Level: " + level);
             System.exit(1);
         }
     }

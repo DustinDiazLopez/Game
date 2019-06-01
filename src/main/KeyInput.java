@@ -21,31 +21,32 @@ public class KeyInput extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-
-        for (GameObject temporaryObject : handler.object) {
-            if (temporaryObject.getId() == ID.Player) {
-                if (key == KeyEvent.VK_W) {
-                    temporaryObject.setVelY(-5);
-                    keyDown[0] = true;
-                }
-                if (key == KeyEvent.VK_S) {
-                    temporaryObject.setVelY(5);
-                    keyDown[1] = true;
-                }
-                if (key == KeyEvent.VK_D) {
-                    temporaryObject.setVelX(5);
-                    keyDown[2] = true;
-                }
-                if (key == KeyEvent.VK_A) {
-                    temporaryObject.setVelX(-5);
-                    keyDown[3] = true;
+        try {
+            for (GameObject temporaryObject : handler.object) {
+                if (temporaryObject.getId() == ID.Player) {
+                    if (key == KeyEvent.VK_W) {
+                        temporaryObject.setVelY(-5);
+                        keyDown[0] = true;
+                    }
+                    if (key == KeyEvent.VK_S) {
+                        temporaryObject.setVelY(5);
+                        keyDown[1] = true;
+                    }
+                    if (key == KeyEvent.VK_D) {
+                        temporaryObject.setVelX(5);
+                        keyDown[2] = true;
+                    }
+                    if (key == KeyEvent.VK_A) {
+                        temporaryObject.setVelX(-5);
+                        keyDown[3] = true;
+                    }
                 }
             }
-        }
 
-        if (key == KeyEvent.VK_ESCAPE) {
-            System.exit(1);
-        }
+            if (key == KeyEvent.VK_ESCAPE) {
+                System.exit(1);
+            }
+        } catch (Exception ignored) {}
     }
 
     @Override

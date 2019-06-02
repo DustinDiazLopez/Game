@@ -9,7 +9,6 @@ public class SmartEnemy extends GameObject {
     private Color color = Color.GREEN;
 
     private Handler handler;
-
     private GameObject player;
 
     public SmartEnemy(int x, int y, ID id, Handler handler) {

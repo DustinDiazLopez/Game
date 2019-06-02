@@ -10,9 +10,6 @@ public class Spawner {
 
     private Random r = new Random();
 
-    private int spawnX = r.nextInt(Game.WIDTH - 50);
-    private int spawnY = r.nextInt(Game.HEIGHT - 50);
-
     private boolean activeIsBoss = false;
 
     public void spawn(ID id) {
@@ -29,6 +26,10 @@ public class Spawner {
 
         if (id == ID.FastEnemy) {
             handler.addObject(new FastEnemy(spawnX, spawnY, ID.FastEnemy, handler));
+        }
+
+        if (id == ID.MenuParticle) {
+            handler.addObject(new MenuParticle(spawnX + 50, spawnY + 50, ID.MenuParticle, handler));
         }
 
         if (id == ID.SmartEnemy) {

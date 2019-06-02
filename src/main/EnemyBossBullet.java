@@ -10,7 +10,6 @@ public class EnemyBossBullet extends GameObject {
     private Handler handler;
 
     private Color color = Color.RED;
-
     private Random r = new Random();
 
     public EnemyBossBullet(float x, float y, ID id, Handler handler) {
@@ -51,7 +50,6 @@ public class EnemyBossBullet extends GameObject {
         y += velY;
 
         Bounds(true, true);
-
         enableTrail(true);
     }
 

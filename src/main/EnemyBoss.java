@@ -4,16 +4,13 @@ import java.awt.*;
 import java.util.Random;
 
 public class EnemyBoss extends GameObject {
+    private float lifeTrail = 0.002f;
     private float h = 96;
     private float w = 96;
-
     private int timer = 80;
     private int timer2 = 50;
 
-    private float lifeTrail = 0.002f;
-
     private Color color = Color.GRAY;
-
     private Random r = new Random();
 
     private Handler handler;

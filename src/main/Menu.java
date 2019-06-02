@@ -11,13 +11,14 @@ public class Menu extends MouseAdapter {
 
     private Game game;
     private Handler handler;
-
     private Spawner spawner;
+    private HUD hud;
 
-    Menu(Game game, Handler handler, Spawner spawner) {
+    Menu(Game game, Handler handler, Spawner spawner, HUD hud) {
         this.game = game;
         this.handler = handler;
         this.spawner = spawner;
+        this.hud = hud;
     }
 
     public void tick() {
@@ -30,25 +31,25 @@ public class Menu extends MouseAdapter {
         int my = e.getY();
 
         if (mouseOver(mx, my, center(Game.WIDTH, rectW), center(Game.HEIGHT, rectH) - 100, rectW, rectH)) {  //PLAY
-            if (game.gameState == Game.STATE.MENU) {
-                game.gameState = Game.STATE.GAME;
+            if (Game.gameState == Game.STATE.MENU) {
+                handler.clearAllEnemy();
+                Game.gameState = Game.STATE.GAME;
                 spawner.spawn(ID.Player);
                 spawner.spawn(ID.BasicEnemy);
             }
         }
 
         if (mouseOver(mx, my, center(Game.WIDTH, rectW), center(Game.HEIGHT, rectH), rectW, rectH)) {  //HELP
-            if (game.gameState == Game.STATE.MENU) { //Menu help
-                game.gameState = Game.STATE.HELP;
+            if (Game.gameState == Game.STATE.MENU) { //Menu help
+                Game.gameState = Game.STATE.HELP;
             }
-
         }
 
         if (mouseOver(mx, my, center(Game.WIDTH, rectW), center(Game.HEIGHT, rectH) + 100, rectW, rectH)) {  //QUIT
-            if (game.gameState == Game.STATE.HELP) {  //Back help button
-                game.gameState = Game.STATE.MENU;
-            } else if (game.gameState == Game.STATE.MENU) {
-                game.gameState = Game.STATE.QUIT;
+            if (Game.gameState == Game.STATE.HELP || Game.gameState == Game.STATE.END) {  //Back help button
+                Game.gameState = Game.STATE.MENU;
+            } else if (Game.gameState == Game.STATE.MENU) {
+                Game.gameState = Game.STATE.QUIT;
                 System.exit(1);
             }
         }
@@ -82,7 +83,7 @@ public class Menu extends MouseAdapter {
     }
 
     public void render(Graphics graphics) {
-        if (game.gameState == Game.STATE.MENU) {
+        if (Game.gameState == Game.STATE.MENU) {
             Font font = new Font("arial", Font.BOLD, 50);
             Font font2 = new Font("arial", Font.PLAIN, 45);
 
@@ -103,7 +104,8 @@ public class Menu extends MouseAdapter {
             ShowRectangle(rectW, rectH, graphics, Color.WHITE, 0, 100);
             ShowRectangle(rectW, rectH, graphics, Color.WHITE, 0, 0);
             ShowRectangle(rectW, rectH, graphics, Color.RED, 0, -100);
-        } else if (game.gameState == Game.STATE.HELP) {
+
+        } else if (Game.gameState == Game.STATE.HELP) {
             Font font = new Font("arial", Font.BOLD, 50);
             Font font2 = new Font("arial", Font.PLAIN, 45);
             Font font3 = new Font("arial", Font.PLAIN, 25);
@@ -113,6 +115,28 @@ public class Menu extends MouseAdapter {
 
             graphics.setFont(font3);
             ShowString("Use WASD keys to move the player.", 200, 64, graphics, Color.WHITE, 100, 50);
+
+            graphics.setFont(font2);
+            int stringOffsetW = -60;
+            int stringOffsetH = 5;
+
+            int stringW = 215;
+            int stringH = 160;
+
+            ShowString("Back", stringW, stringH, graphics, Color.WHITE, stringOffsetW, stringOffsetH - 200);
+
+            ShowRectangle(rectW, rectH, graphics, Color.WHITE, 0, -100);
+
+        } else if (Game.gameState == Game.STATE.END) {
+            Font font = new Font("arial", Font.BOLD, 50);
+            Font font2 = new Font("arial", Font.PLAIN, 45);
+            Font font3 = new Font("arial", Font.PLAIN, 25);
+
+            graphics.setFont(font);
+            ShowString("GAME OVER", 200, 64, graphics, Color.WHITE, 25, 150);
+
+            graphics.setFont(font3);
+            ShowString("Your Score: " + hud.getScore() + "\nYour Level: " + hud.getLevel(), 200, 64, graphics, Color.WHITE, 100, 50);
 
             graphics.setFont(font2);
             int stringOffsetW = -60;

@@ -1,14 +1,11 @@
 package main;
 
 import java.awt.*;
-import java.util.Random;
 
 public class Player extends GameObject {
 
     private float h = 32;
     private float w = 32;
-
-    Random random = new Random();
 
     private Handler handler;
 

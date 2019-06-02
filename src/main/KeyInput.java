@@ -9,7 +9,6 @@ public class KeyInput extends KeyAdapter {
 
     private boolean[] keyDown = new boolean[4];
 
-
     public KeyInput(Handler handler) {
         this.handler = handler;
 

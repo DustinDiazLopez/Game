@@ -9,7 +9,11 @@ public class Handler {
     List<GameObject> object = Collections.synchronizedList(new LinkedList<>());
 
     void clearAllEnemy() {
-        this.object.removeIf(tempObject -> tempObject.getId() != ID.Player);
+        if (Game.gameState != Game.STATE.END) {
+            this.object.removeIf(tempObject -> tempObject.getId() != ID.Player);
+        } else {
+            object.clear();
+        }
     }
 
     public void tick() {
@@ -20,7 +24,8 @@ public class Handler {
     }
 
     public void render(Graphics graphics) {
-        for (GameObject temporaryGameObject : object) {
+        for (int i = 0; i < object.size(); i++) {
+            GameObject temporaryGameObject = object.get(i);
             temporaryGameObject.render(graphics);
         }
     }

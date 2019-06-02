@@ -5,9 +5,7 @@ import java.awt.*;
 public class HUD {
 
     public static float HEALTH = 100;
-
     private float greenValue = 255;
-
     private int score = 0;
     private int level = 1;
 
@@ -16,11 +14,6 @@ public class HUD {
         greenValue = Game.clamp(greenValue, 0, 255);
         greenValue = HEALTH * 2;
         score++;
-
-        if (HEALTH == 0) {
-            System.err.println("Score: " + score + " Level: " + level);
-            System.exit(1);
-        }
     }
 
     public void render(Graphics graphics) {

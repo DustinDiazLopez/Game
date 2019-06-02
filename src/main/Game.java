@@ -6,41 +6,34 @@ import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
 
-
     private static final long serialVersionUID = -1442798787354930462L;
-
     public static final int WIDTH = 1080 , HEIGHT = WIDTH / 12 * 9;
+    private boolean running = false;
+    private int FPS;
 
     private Thread thread;
-
-    private boolean running = false;
-
     private Random random;
 
     private Handler handler;
-
     private HUD hud;
-
     private Spawner spawner;
-
-    private int FPS;
-
     private Menu menu;
 
     public enum STATE {
         MENU,
         GAME,
         HELP,
-        QUIT
+        QUIT,
+        END
     }
 
-    public STATE gameState = STATE.MENU;
+    static STATE gameState = STATE.MENU;
 
     public Game() {
         handler = new Handler();
         hud = new HUD();
         spawner = new Spawner(handler, hud);
-        menu = new Menu(this, handler, spawner);
+        menu = new Menu(this, handler, spawner, hud);
         random = new Random();
 
         this.addKeyListener(new KeyInput(handler));
@@ -49,8 +42,11 @@ public class Game extends Canvas implements Runnable {
         new Window(WIDTH, HEIGHT, "Ze game", this);
 
         if (gameState == STATE.GAME) {
-//            spawner.spawn(ID.Player);
-//            spawner.spawn(ID.BasicEnemy);
+            spawner.spawn(ID.BasicEnemy);
+        } else {
+            for (int i = 0; i < 20; i++) {
+                spawner.spawn(ID.MenuParticle);
+            }
         }
 
 
@@ -112,7 +108,13 @@ public class Game extends Canvas implements Runnable {
         if (gameState == STATE.GAME) {
             hud.tick();
             spawner.tick();
-        } else if (gameState == STATE.MENU) {
+
+            if (HUD.HEALTH <= 0) {
+                HUD.HEALTH = 100;
+                gameState = STATE.END;
+                handler.clearAllEnemy();
+            }
+        } else if (gameState == STATE.MENU || gameState == STATE.END) {
             menu.tick();
         }
     }
@@ -134,7 +136,7 @@ public class Game extends Canvas implements Runnable {
 
         if (gameState == STATE.GAME) {
             hud.render(graphics);
-        } else if (gameState == STATE.MENU || gameState == STATE.HELP) {
+        } else if (gameState == STATE.MENU || gameState == STATE.HELP || gameState == STATE.END ) {
             menu.render(graphics);
         }
 

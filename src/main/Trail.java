@@ -6,13 +6,12 @@ public class Trail extends GameObject {
 
     private float alpha = 1;
     private float life;
+    private float width;
+    private float height;
 
     private Handler handler;
 
     private Color color;
-
-    private float width;
-    private float height;
 
     public Trail(float x, float y, ID id, Color color, float width, float height, float life, Handler handler) {
         super(x, y, id);
